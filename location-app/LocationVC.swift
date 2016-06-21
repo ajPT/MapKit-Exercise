@@ -160,16 +160,26 @@ class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         return nil
     }
     
-    //Show alert when press annotation's popup
+    //Show STUFF when press the annotation's popup
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let parkAnnotation = view.annotation as! ParkAnnotation
-        let parkName = parkAnnotation.title
-        let parkInfo = parkAnnotation.subtitle
         
-        let ac = UIAlertController(title: parkName, message: parkInfo, preferredStyle: .Alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        presentViewController(ac, animated: true, completion: nil)
-    }
+        // 1) Show alert when press annotation's popup
 
+        //let parkName = parkAnnotation.title
+        //let parkInfo = parkAnnotation.subtitle
+        //let ac = UIAlertController(title: parkName, message: parkInfo, preferredStyle: .Alert)
+        //ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        //presentViewController(ac, animated: true, completion: nil)
+        
+        // 2) Show "How to get there"
+        
+        let placemark = MKPlacemark(coordinate: parkAnnotation.coordinate, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = parkAnnotation.title
+        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        mapItem.openInMapsWithLaunchOptions(launchOptions)
+    }
+    
 }
 
