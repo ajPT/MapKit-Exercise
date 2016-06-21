@@ -36,7 +36,6 @@ class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         for park in parks {
             createAnnotationForLocation(park)
         }
-
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -52,15 +51,20 @@ class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return parks.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCellWithIdentifier("ParkCell") as? ParkCell {
+            let park = parks[indexPath.row]
+            cell.configureCell(park)
+            return cell
+        }
         return UITableViewCell()
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        //nothing for now
     }
     
     
@@ -152,7 +156,6 @@ class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
                 let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 view.enabled = true
                 view.canShowCallout = true
-                //view.calloutOffset = CGPoint(x: -5, y: 5)
                 view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
                 return view
             }
@@ -160,7 +163,7 @@ class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         return nil
     }
     
-    //Show STUFF when press the annotation's popup
+    //Show STUFF when pressing the annotation's popup
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let parkAnnotation = view.annotation as! ParkAnnotation
         

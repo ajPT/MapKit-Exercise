@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E0658C961D195BA1008F488D /* ParkAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0658C951D195BA1008F488D /* ParkAnnotation.swift */; };
 		E0658C981D1977ED008F488D /* Park.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0658C971D1977ED008F488D /* Park.swift */; };
+		E0658C9F1D19B614008F488D /* ParkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0658C9E1D19B614008F488D /* ParkCell.swift */; };
 		E08353A91D1853560017A6CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08353A81D1853560017A6CE /* AppDelegate.swift */; };
 		E08353AB1D1853560017A6CE /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08353AA1D1853560017A6CE /* FirstViewController.swift */; };
 		E08353AD1D1853560017A6CE /* LocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08353AC1D1853560017A6CE /* LocationVC.swift */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		E0658C951D195BA1008F488D /* ParkAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkAnnotation.swift; sourceTree = "<group>"; };
 		E0658C971D1977ED008F488D /* Park.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Park.swift; sourceTree = "<group>"; };
+		E0658C9E1D19B614008F488D /* ParkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkCell.swift; sourceTree = "<group>"; };
 		E08353A51D1853560017A6CE /* location-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "location-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E08353A81D1853560017A6CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E08353AA1D1853560017A6CE /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				E08353AE1D1853560017A6CE /* Main.storyboard */,
 				E08353B31D1853560017A6CE /* LaunchScreen.storyboard */,
+				E0658C9E1D19B614008F488D /* ParkCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 				E08353A91D1853560017A6CE /* AppDelegate.swift in Sources */,
 				E0658C981D1977ED008F488D /* Park.swift in Sources */,
 				E08353AB1D1853560017A6CE /* FirstViewController.swift in Sources */,
+				E0658C9F1D19B614008F488D /* ParkCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
