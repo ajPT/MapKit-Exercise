@@ -13,8 +13,9 @@ class Park {
     //MARK: - Properties
     
     private var _name: String!
-    private var _coordinates: (Double, Double)!
+    private var _coordinates: (lat: Double, long: Double)!
     private var _description: String!
+    private var _parkUrl: String!
     
     
     //MARK: - Getters
@@ -31,13 +32,21 @@ class Park {
         return _description
     }
     
+    var parkURL: String {
+        return _parkUrl
+    }
+    
     
     //MARK: Initializer
     
     init(name: String, lat: Double, long: Double, desc: String) {
-        self._name = name
-        self._coordinates = (lat, long)
-        self._description = desc
+        _name = name
+        _coordinates = (lat: lat, long: long)
+        _description = desc
+        let latStr = String(lat)
+        let longStr = String(long)
+        _parkUrl = "https://google.com/maps/place/\(latStr),\(longStr)"
     }
+    
     
 }

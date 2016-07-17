@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import Alamofire
 
 class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
 
@@ -15,9 +16,7 @@ class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     
     let locationManager = CLLocationManager() //Auth
     let regionRadius: CLLocationDistance = 10000 //Set initial area
-    //Test data
     var parks = [Park]()
-    let park1 = Park(name: "Primrose Hill", lat: 51.5396, long: -0.1608, desc: "Great Park in London")
     
     
     //MARK: - IBOutlets
@@ -31,11 +30,15 @@ class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     override func viewDidLoad() {
         super.viewDidLoad()
         map.delegate = self
-        parks.append(park1) // Test data
-        //Annotation: Create all annotations
-        for park in parks {
-            createAnnotationForLocation(park)
+        
+        downloadParksInfo {
+            self.tableView.reloadData()
+            //Annotation: Create all annotations
+            for park in self.parks {
+                self.createAnnotationForLocation(park)
+            }
         }
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -83,6 +86,7 @@ class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius, regionRadius)
+        //PORTO CENTER: 41.162142, -8.621953
         map.setRegion(coordinateRegion, animated: true)
     }
     
@@ -97,7 +101,9 @@ class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
 
     //MARK: Create
     func createAnnotationForLocation(park: Park) {
-        let parkCoords = CLLocationCoordinate2D(latitude: park.coordinates.lat, longitude: park.coordinates.long)
+        let lat = park.coordinates.lat
+        let long = park.coordinates.long
+        let parkCoords = CLLocationCoordinate2D(latitude: lat, longitude: long)
         let park = ParkAnnotation(coordinate: parkCoords, title: park.name, desc: park.description)
         map.addAnnotation(park)
     }
@@ -182,6 +188,42 @@ class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         mapItem.name = parkAnnotation.title
         let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
         mapItem.openInMapsWithLaunchOptions(launchOptions)
+    }
+    
+    
+    
+    // AUX
+    func downloadParksInfo(completed: DownloadComplete) {
+        var name: String!
+        var lat: Double!
+        var long: Double!
+        var desc: String!
+        
+        let url = NSURL(string: URL_BASE)!
+        Alamofire.request(.GET, url).responseJSON(completionHandler: { response in
+            let result = response.result
+            if let dict = result.value as? [Dictionary<String, AnyObject>] {
+                for entry in dict {
+                    if let geoDict = entry["geometry"] as? [String: AnyObject] {
+                        if let coordinates = geoDict["coordinates"] as? [AnyObject] {
+                            long = coordinates[0].doubleValue
+                            lat = coordinates[1].doubleValue
+                        }
+                    }
+                    if let properties = entry["properties"] as? Dictionary<String, AnyObject> {
+                        if let parkDescription = properties["desc_pt"] as? String {
+                            desc = parkDescription
+                        }
+                        if let parkName = properties["name"] as? String {
+                            name = parkName
+                        }
+                    }
+                    let park = Park(name: name, lat: lat, long: long, desc: desc)
+                    self.parks.append(park)
+                }
+            }
+            completed()
+        })
     }
     
 }
