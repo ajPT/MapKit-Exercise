@@ -210,7 +210,7 @@ class LocationVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
                             lat = coordinates[1].doubleValue
                         }
                     }
-                    if let properties = entry["properties"] as? Dictionary<String, AnyObject> {
+                    if let properties = entry["properties"] as? [String: AnyObject] {
                         if let parkDescription = properties["desc_pt"] as? String {
                             desc = parkDescription
                         }
